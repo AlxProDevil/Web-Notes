@@ -13,15 +13,19 @@ function updateStorage(){
 
 createButton.addEventListener("click", () =>{
     let deleteArea = document.createElement("div");
+    let title = document.createElement("p");
     let img = document.createElement("img");
     let textArea = document.createElement("div");
     let inputBox = document.createElement("p");
 
     deleteArea.className = "delete-area";
-    img.src = "image/cross_red.png";
+    title.className = "title";
+    title.setAttribute("contenteditable", "true");
+    deleteArea.appendChild(title);
+    img.src = "image/cross.svg";
     deleteArea.appendChild(img);
 
-    inputBox.className = "input-box";
+    textArea.className = "input-box";
     inputBox.setAttribute("contenteditable", "true");
     textArea.appendChild(inputBox);
 

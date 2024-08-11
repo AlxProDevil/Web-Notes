@@ -35,15 +35,60 @@ createButton.addEventListener("click", () =>{
     updateStorage();
 })
 
+window.confirm = function(message, callback) {
+    const overlay = document.createElement("div");
+    overlay.classList.add("overlay");
+
+    const confirm = document.createElement("div");
+    const buttonCont = document.createElement("div");
+
+    const yesButton = document.createElement("button");
+    yesButton.className = "yesButton";
+    yesButton.innerText = "Yes";
+
+    const noButton = document.createElement("button");
+    noButton.className = "noButton";
+    noButton.innerText = "No";
+
+    confirm.classList.add("confirm");
+    confirm.innerText = message;
+    buttonCont.appendChild(yesButton);
+    buttonCont.appendChild(noButton);
+    confirm.appendChild(buttonCont);
+
+    yesButton.addEventListener("click", () => {
+        callback(true);
+        overlay.remove();
+        confirm.remove();
+    })
+
+    noButton.addEventListener("click", () => {
+        callback(false);
+        overlay.remove();
+        confirm.remove();
+    })
+
+    overlay.addEventListener("click", () => {
+        callback(false);
+        overlay.remove();
+        confirm.remove();
+    })
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(confirm);
+}
+
 noteContainer.addEventListener("click", function(e){
     if(e.target.tagName === "IMG"){
-        if(confirm("Are you sure you want to delete this note?")){
-            let deleteArea = e.target.closest(".delete-area");
-            let textArea = deleteArea.nextElementSibling;
-            deleteArea.remove();
-            textArea.remove();
-            updateStorage();
-        }
+        confirm("Are you sure you want to delete this note?", (confirm) => {
+            if(confirm){
+                let deleteArea = e.target.closest(".delete-area");
+                let textArea = deleteArea.nextElementSibling;
+                deleteArea.remove();
+                textArea.remove();
+                updateStorage();
+            }
+        })
     }
 })
 
